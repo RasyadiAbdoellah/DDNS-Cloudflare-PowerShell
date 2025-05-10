@@ -106,14 +106,14 @@ $cloudflare_record_info = @{
   Headers = @{"Authorization" = "Bearer $cloudflare_zone_api_token"; "Content-Type" = "application/json" }
 }
 
-$cloudflare_record_info_resposne = Invoke-RestMethod @cloudflare_record_info
-if ($cloudflare_record_info_resposne.success -ne "True") {
+$cloudflare_record_info_response = Invoke-RestMethod @cloudflare_record_info
+if ($cloudflare_record_info_response.success -ne "True") {
   Write-Output "Error! Can't get $dns_record record inforamiton from cloudflare API" | Tee-Object $File_LOG -Append
   Exit
 }
 
 ### Get the dns record id from response
-$dns_record_id = $cloudflare_record_info_resposne.result.id.Trim()
+$dns_record_id = $cloudflare_record_info_response.result.id.Trim()
 
 ### Push new dns record information to cloudflare's api
 $update_dns_record = @{
